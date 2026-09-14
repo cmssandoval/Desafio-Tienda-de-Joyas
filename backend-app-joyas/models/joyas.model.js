@@ -59,15 +59,37 @@ const getAllJoyas = async ({ limit = 5, page = 1, order_by = "id_ASC" }) => {
 
 };
 
-const getJoyasFiltered = async () => {
+const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) => {
     try {
-        throw new Error( `Not implemented!` );
+        
+        let filters = [];
+        let values = [];
 
-        // const query = 'SELECT * FROM inventario';
-        // const { rows: result } = await pool.query(query);
-        return result;
+        const addFilter = ( field, operator, value ) => {
+            values.push( value );
+            const { length } = filters;
+            filters.push(`${ field } ${ operator } $${ length + 1 }`)
+        };
+
+        if ( precio_max )   addFilter( 'precio', '<=', precio_max );
+        if ( precio_min )   addFilter( 'precio', '>=', precio_min );
+        if ( categoria )    addFilter( 'categoria', '=', categoria );
+        if ( metal )        addFilter( 'metal', '=', metal );
+
+        let query = 'SELECT * FROM inventario';
+
+        if ( filters.length > 0 ) {
+            filters = filters.join(' AND ');
+            query += ` WHERE ${ filters }`;
+        }
+
+        const { rows: joyasFiltered } = await pool.query( query, values )
+        return joyasFiltered ;
+
     } catch (error) {
+
         throw error;
+
     }
 };
 

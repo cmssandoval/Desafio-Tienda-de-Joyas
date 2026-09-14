@@ -31,8 +31,9 @@ const readJoyas = async ( req, res ) => {
 };
 
 const readJoyasFiltered = async ( req, res ) => {
-    const response = await joyasModel.getJoyasFiltered();    
-    throw new Error(`Not implemented!`);
+    const filters = req.query;
+    const joyasFiltered = await joyasModel.getJoyasFiltered( filters );    
+    return res.status(200).json( joyasFiltered );
 };
 
 const readJoyaById = async ( req, res ) => {
