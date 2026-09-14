@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import { notFound } from './middlewares/notFound.js';
 
 const app = express();
 app.use(cors());
@@ -15,3 +16,5 @@ app.listen(SERVER_PORT, () => {
 app.get('/', async ( req, res ) => {
     res.status(200).send('Hello world from the home route!');
 });
+
+app.use(notFound);
