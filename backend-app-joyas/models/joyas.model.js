@@ -7,13 +7,19 @@ import { buildJoyasHATEOAS } from '../utils/hateoas.utils.js';
 import { BASE_URL } from '../utils/baseUrl.utils.js';
 
 const getTotalPages = async ( limit ) => {
-
-    const countQuery = 'SELECT COUNT(*) FROM inventario';
-    const { rows: countResult } = await pool.query( countQuery );
-    const total_rows = parseInt( countResult[0].count, 10 );
-    const total_pages = Math.ceil( total_rows / limit );
-    return { total_pages };
-    
+    try {
+        
+        const countQuery = 'SELECT COUNT(*) FROM inventario';
+        const { rows: countResult } = await pool.query( countQuery );
+        const total_rows = parseInt( countResult[0].count, 10 );
+        const total_pages = Math.ceil( total_rows / limit );
+        return { total_pages };
+        
+    } catch (error) {
+        
+        throw error;
+        
+    }
 };
 
 const getAllJoyas = async ({ limit = 5, page = 1, order_by = "id_ASC" }) => {
