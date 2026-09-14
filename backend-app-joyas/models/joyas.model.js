@@ -10,6 +10,22 @@ const getAllJoyas = async () => {
     }
 };
 
+const joyasHATEOAS = ( joyas ) => {
+    const results = joyas.map(( joya ) => {
+        return {
+            nombre: joya.nombre,
+            href: `/joyas/joya/${joya.id}`,
+        }
+    }).slice( 0, 5 );
+
+    const total = joyas.length;
+    const HATEOAS = {
+        total,
+        results,
+    };
+    return HATEOAS;
+};
+
 const getJoyasFiltered = async () => {
     try {
         throw new Error(`Not implemented!`);
@@ -72,6 +88,7 @@ const removeJoyaById = async ( id ) => {
 
 export const joyasModel = {
     getAllJoyas,
+    joyasHATEOAS,
     getJoyasFiltered,
     getJoyaById,
     replaceJoyaById,

@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', joyasController.readJoyas);
 router.get('/filtros', joyasController.readJoyasFiltered);
-router.get('/:id', joyasController.readJoyaById);
+router.get('/joya/:id', joyasController.readJoyaById);
 
 router.put('/:id', joyasController.replaceJoyaById);
 router.patch('/:id', joyasController.updateJoyaById);
