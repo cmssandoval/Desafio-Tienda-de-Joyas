@@ -1,7 +1,10 @@
 import express from 'express';
-import cors from 'cors';
 import 'dotenv/config';
+
+import cors from 'cors';
 import { notFound } from './middlewares/notFound.js';
+
+import joyasRoute from './routes/joyas.route.js';
 
 const app = express();
 app.use(cors());
@@ -13,8 +16,10 @@ app.listen(SERVER_PORT, () => {
     console.log(`Server is on at ${BASE_URL}`);
 });
 
-app.get('/', async ( req, res ) => {
+app.get('/', ( req, res ) => {
     res.status(200).send('Hello world from the home route!');
 });
+
+app.use('/joyas', joyasRoute)
 
 app.use(notFound);
