@@ -1,4 +1,4 @@
-import { logger } from '../utils/logger.js';
+import { logger } from '../utils/logger.utils.js';
 
 export const notFound = async (req, res, next) => {
 
