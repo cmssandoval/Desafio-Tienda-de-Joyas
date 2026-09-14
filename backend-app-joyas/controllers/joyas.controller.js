@@ -1,11 +1,17 @@
 import { joyasModel } from '../models/joyas.model.js';
 
 const readJoyas = async ( req, res ) => {
-    const joyas = await joyasModel.getAllJoyas();
-    const HATEOAS = joyasModel.joyasHATEOAS(joyas)
+
+    const {
+        limit = 5,
+        page = 1,
+        order_by = "id_ASC"
+    } = req.query;
     
-    console.log( HATEOAS );
-    return res.status(200).json( HATEOAS );
+    const joyas = await joyasModel.getAllJoyas({ limit, page, order_by });    
+
+    console.log( joyas );
+    return res.status(200).json( joyas );
 };
 
 const readJoyasFiltered = async ( req, res ) => {
