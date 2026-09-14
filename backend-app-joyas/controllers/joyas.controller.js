@@ -8,6 +8,22 @@ const readJoyas = async ( req, res ) => {
         order_by = "id_ASC"
     } = req.query;
     
+    const isPageValid = /^[1-9]\d*$/.test(page);
+
+    if ( !isPageValid ) {
+        return res.status(400).json({
+            message: "Invalid page number, number > 0"
+        });
+    }
+
+    const isLimitValid = /^[1-9]\d*$/.test(limit);
+
+    if ( !isLimitValid ) {
+        return res.status(400).json({
+            message: "Invalid limit number, number > 0"
+        });
+    }
+
     const joyas = await joyasModel.getAllJoyas({ limit, page, order_by });    
 
     console.log( joyas );
