@@ -23,7 +23,6 @@ const getTotalPages = async ( limits ) => {
 };
 
 const getAllJoyas = async ({ limits = 5, page = 1, order_by = "id_ASC" }) => {
-    
     try {
 
         const query =
@@ -46,7 +45,14 @@ const getAllJoyas = async ({ limits = 5, page = 1, order_by = "id_ASC" }) => {
             offset
         );
 
-        const { rows: joyas } = await pool.query( formattedQuery );
+        const queryResult = await pool.query( formattedQuery );
+        const joyas = queryResult.rows;
+        
+        if ( queryResult.rowCount === 0 ) {
+            const error = new Error(`Not Found. There is no Joyas to show`);
+            error.status = 404;
+            throw error;
+        }
 
         const { total_pages } = await getTotalPages( limits );
 
@@ -57,11 +63,9 @@ const getAllJoyas = async ({ limits = 5, page = 1, order_by = "id_ASC" }) => {
 
         throw error;
     }
-
 };
 
 const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) => {
-
     try {
         
         let filters = [];
@@ -69,6 +73,7 @@ const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) =>
 
         const addFilter = ( field, operator, value ) => {
             values.push( value );
+            
             const { length } = filters;
             filters.push(`${ field } ${ operator } $${ length + 1 }`)
         };
@@ -85,7 +90,16 @@ const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) =>
             query += ` WHERE ${ filters }`;
         }
 
-        const { rows: joyasFiltered } = await pool.query( query, values )
+        const queryResult = await pool.query( query, values );
+        const joyasFiltered = queryResult.rows;
+
+        if ( queryResult.rowCount === 0 ) {
+            const error = new Error(`Not Found. There is no Joyas to show with the specified filters`);
+            error.status = 404;
+
+            throw error;
+        }
+
         return joyasFiltered ;
 
     } catch (error) {
@@ -96,27 +110,33 @@ const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) =>
 };
 
 const getJoyaById = async ( joyaId ) => {
-
     try {
 
         const query = 'SELECT * FROM inventario WHERE id = $1';
         const values = [ joyaId ];
-        const { rows: result } = await pool.query( query, values );
+
+        const queryResult = await pool.query( query, values );
+        const joya = queryResult.rows[0];
+
+        if ( queryResult.rowCount === 0 ) {
+            const error = new Error(`Not Found. There is no Joya with id ${ joyaId }`);
+            error.status = 404;
+
+            throw error;
+        }
+
         return {
             all: `${ BASE_URL }/joyas?limits=5&page=1&order_by=id_ASC`,
-            result: result[0],
+            result: joya,
         };
 
     } catch (error) {
 
         throw error;
-
     }
-
 };
 
 const replaceJoyaById = async ( id ) => {
-
     try {
 
         throw new Error(`Not implemented!`);
@@ -128,13 +148,10 @@ const replaceJoyaById = async ( id ) => {
     } catch (error) {
 
         throw error;
-
     }
-
 };
 
 const updateJoyaById = async ( id ) => {
-
     try {
 
         throw new Error(`Not implemented!`);
@@ -146,13 +163,10 @@ const updateJoyaById = async ( id ) => {
     } catch (error) {
 
         throw error;
-
     }
-
 };
 
 const removeJoyaById = async ( id ) => {
-
     try {
         
         throw new Error(`Not implemented!`);
@@ -164,18 +178,14 @@ const removeJoyaById = async ( id ) => {
     } catch (error) {
 
         throw error;
-
     }
-
 };
 
 export const joyasModel = {
-
     getAllJoyas,
     getJoyasFiltered,
     getJoyaById,
     replaceJoyaById,
     updateJoyaById,
     removeJoyaById,
-
 };

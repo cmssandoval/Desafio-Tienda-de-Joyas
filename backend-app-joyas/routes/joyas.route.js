@@ -1,9 +1,10 @@
 import { joyasController } from '../controllers/joyas.controller.js';
+import { validatePagination } from '../middlewares/validatePagination.js';
 
 import { Router } from 'express';
 const router = Router();
 
-router.get('/', joyasController.readJoyas);
+router.get('/', validatePagination, joyasController.readJoyas);
 router.get('/filtros', joyasController.readJoyasFiltered);
 router.get('/joya/:id', joyasController.readJoyaById);
 

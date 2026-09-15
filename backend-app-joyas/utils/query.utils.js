@@ -22,5 +22,4 @@ export const validateQueryParams = ( field, direction ) => {
         : "ASC";
 
     return { safeField, safeDirection };
-
 };

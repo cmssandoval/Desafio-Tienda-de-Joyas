@@ -3,6 +3,7 @@ import 'dotenv/config';
 
 import cors from 'cors';
 import { notFound } from './middlewares/notFound.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 import joyasRoute from './routes/joyas.route.js';
 
@@ -23,7 +24,4 @@ app.get('/', ( req, res ) => {
 app.use('/joyas', joyasRoute);
 
 app.use(notFound);
-
-//! Create sql injection detection middleware
-//! Create route access middleware
-//! Create data access middleware
+app.use(errorHandler);
