@@ -12,12 +12,12 @@ export const validateQueryParams = ( field, direction ) => {
     const directionList = [ "ASC", "DESC" ];
 
     const safeField =
-        fieldList.includes(field.toLowerCase())
-        ? field?.toLowerCase()
+        fieldList.includes( field?.toLowerCase() )
+        ? field.toLowerCase()
         : "id";
 
     const safeDirection =
-        directionList.includes(direction.toUpperCase())
+        directionList.includes( direction?.toUpperCase() )
         ? direction.toUpperCase()
         : "ASC";
 
