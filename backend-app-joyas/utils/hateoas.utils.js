@@ -1,6 +1,6 @@
 import { BASE_URL } from './baseUrl.utils.js';
 
-export const buildJoyasHATEOAS = ({ joyas, total_pages, limit, page, order_by }) => {
+export const buildJoyasHATEOAS = ({ joyas, total_pages, limits, page, order_by }) => {
 
     try {
 
@@ -12,18 +12,20 @@ export const buildJoyasHATEOAS = ({ joyas, total_pages, limit, page, order_by })
         }).slice( 0, 5 );
 
         return {
+
             results,
             total_pages,
             page,
-            limit,
+            limits,
             next:
                 (total_pages <= parseInt( page, 10 ))
                     ? null
-                    : `${BASE_URL}/joyas?limit=${ limit }&page=${parseInt( page, 10 ) + 1}&order_by=${ order_by }`,
+                    : `${BASE_URL}/joyas?limits=${ limits }&page=${parseInt( page, 10 ) + 1}&order_by=${ order_by }`,
             previous:
                 (page <= 1 )
                     ? null
-                    : `${BASE_URL}/joyas?limit=${ limit }&page=${parseInt( page, 10 ) - 1}&order_by=${ order_by }`,
+                    : `${BASE_URL}/joyas?limits=${ limits }&page=${parseInt( page, 10 ) - 1}&order_by=${ order_by }`,
+                    
         };
 
     } catch ( error ) {

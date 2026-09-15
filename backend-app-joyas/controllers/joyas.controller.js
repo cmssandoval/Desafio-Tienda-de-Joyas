@@ -3,7 +3,7 @@ import { joyasModel } from '../models/joyas.model.js';
 const readJoyas = async ( req, res ) => {
 
     const {
-        limit = 5,
+        limits = 5,
         page = 1,
         order_by = "id_ASC"
     } = req.query;
@@ -16,15 +16,15 @@ const readJoyas = async ( req, res ) => {
         });
     }
 
-    const isLimitValid = /^[1-9]\d*$/.test(limit);
+    const isLimitsValid = /^[1-9]\d*$/.test(limits);
 
-    if ( !isLimitValid ) {
+    if ( !isLimitsValid ) {
         return res.status(400).json({
-            message: "Invalid limit number, number > 0"
+            message: "Invalid limits number, number > 0"
         });
     }
 
-    const joyas = await joyasModel.getAllJoyas({ limit, page, order_by });    
+    const joyas = await joyasModel.getAllJoyas({ limits, page, order_by });    
 
     console.log( joyas );
     return res.status(200).json( joyas );

@@ -20,6 +20,10 @@ app.get('/', ( req, res ) => {
     res.status(200).send('Hello world from the home route!');
 });
 
-app.use('/joyas', joyasRoute)
+app.use('/joyas', joyasRoute);
 
 app.use(notFound);
+
+//! Create sql injection detection middleware
+//! Create route access middleware
+//! Create data access middleware

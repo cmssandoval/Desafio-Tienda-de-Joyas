@@ -1,18 +1,18 @@
 import format from 'pg-format';
 import { pool } from '../database/connection.js';
-import 'dotenv/config'
+import 'dotenv/config';
 
 import { validateQueryParams } from '../utils/query.utils.js';
 import { buildJoyasHATEOAS } from '../utils/hateoas.utils.js';
 import { BASE_URL } from '../utils/baseUrl.utils.js';
 
-const getTotalPages = async ( limit ) => {
+const getTotalPages = async ( limits ) => {
     try {
         
         const countQuery = 'SELECT COUNT(*) FROM inventario';
         const { rows: countResult } = await pool.query( countQuery );
         const total_rows = parseInt( countResult[0].count, 10 );
-        const total_pages = Math.ceil( total_rows / limit );
+        const total_pages = Math.ceil( total_rows / limits );
         return { total_pages };
         
     } catch (error) {
@@ -22,9 +22,10 @@ const getTotalPages = async ( limit ) => {
     }
 };
 
-const getAllJoyas = async ({ limit = 5, page = 1, order_by = "id_ASC" }) => {
+const getAllJoyas = async ({ limits = 5, page = 1, order_by = "id_ASC" }) => {
     
     try {
+
         const query =
         `SELECT * FROM inventario
         ORDER BY %s %s
@@ -35,21 +36,21 @@ const getAllJoyas = async ({ limit = 5, page = 1, order_by = "id_ASC" }) => {
         const [ field, direction ] = order_by.split( "_" );
         const { safeField, safeDirection } = validateQueryParams( field, direction );
 
-        const offset = ( page - 1 ) * limit;
+        const offset = ( page - 1 ) * limits;
 
         const formattedQuery = format(
             query,
             safeField,
             safeDirection,
-            limit,
+            limits,
             offset
         );
 
         const { rows: joyas } = await pool.query( formattedQuery );
 
-        const { total_pages } = await getTotalPages( limit );
+        const { total_pages } = await getTotalPages( limits );
 
-        const HATEOAS = buildJoyasHATEOAS({ joyas, total_pages, limit, page, order_by });
+        const HATEOAS = buildJoyasHATEOAS({ joyas, total_pages, limits, page, order_by });
         return HATEOAS;
 
     } catch (error) {
@@ -60,6 +61,7 @@ const getAllJoyas = async ({ limit = 5, page = 1, order_by = "id_ASC" }) => {
 };
 
 const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) => {
+
     try {
         
         let filters = [];
@@ -101,7 +103,7 @@ const getJoyaById = async ( joyaId ) => {
         const values = [ joyaId ];
         const { rows: result } = await pool.query( query, values );
         return {
-            all: `${ BASE_URL }/joyas?limit=5&page=1&order_by=id_ASC`,
+            all: `${ BASE_URL }/joyas?limits=5&page=1&order_by=id_ASC`,
             result: result[0],
         };
 

@@ -1,6 +1,6 @@
-import { Router } from 'express';
 import { joyasController } from '../controllers/joyas.controller.js';
 
+import { Router } from 'express';
 const router = Router();
 
 router.get('/', joyasController.readJoyas);
