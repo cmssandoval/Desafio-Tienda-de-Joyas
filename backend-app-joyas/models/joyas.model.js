@@ -65,7 +65,7 @@ const getAllJoyas = async ({ limits = 5, page = 1, order_by = "id_ASC" }) => {
     }
 };
 
-const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) => {
+const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal, nombre }) => {
     try {
         
         let filters = [];
@@ -82,6 +82,7 @@ const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal }) =>
         if ( precio_min )   addFilter( 'precio', '>=', precio_min );
         if ( categoria )    addFilter( 'categoria', '=', categoria );
         if ( metal )        addFilter( 'metal', '=', metal );
+        if ( nombre )       addFilter( 'nombre', 'ILIKE', `%${nombre}%` );
 
         let query = 'SELECT * FROM inventario';
 
