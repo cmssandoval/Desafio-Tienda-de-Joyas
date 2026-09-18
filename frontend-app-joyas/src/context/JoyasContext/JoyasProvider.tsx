@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type { ContextApiData, Pagination } from "./types";
+import type { ContextApiData, Pagination } from "./JoyasContextTypes";
 import JoyasContext from "./JoyasContext";
 
 const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
