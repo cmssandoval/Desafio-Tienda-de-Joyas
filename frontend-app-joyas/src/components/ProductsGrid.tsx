@@ -1,33 +1,26 @@
 import Container from "react-bootstrap/Container";
 import Row from 'react-bootstrap/Row';
 import CustomCard from './CustomCard';
+import useJoyasContext from "../context/JoyasContext/useJoyasContext";
 
 const ProductsGrid = () => {
+  const { loading, error, joyas } = useJoyasContext();
 
-  const x: string = 'A';
+  const getErrorMessage = ( error: unknown ): string => {
+    if ( error instanceof Error ) return error.message;
+    return String(error);
+  }
+
+  if ( loading ) return <div className='fetch-loading'><h1>Cargando Joyas...</h1></div>;
+  if ( error ) return <div className='fetch-error'><h1>Error: { getErrorMessage(error) }</h1></div>;
+  if ( joyas.length === 0 ) return <div className='fetch-empty'><h1>No hay joyas para mostrar</h1></div>;
 
   return (
     <Container className="text-center">
       <Row className='my-4 px-2'>
-          { x !== 'A' ?
-            <h1>No hay productos</h1>
-          : 
-            <>
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-              <CustomCard />
-            </>
-            // x.map(() => {
-              
-            //   })
-          }
+          {joyas.map(( joya ) => (
+            <CustomCard {...joya} />
+          ))}
       </Row>
     </Container>
   );
