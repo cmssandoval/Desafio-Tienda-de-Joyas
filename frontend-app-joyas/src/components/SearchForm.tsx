@@ -20,18 +20,20 @@ const SearchForm = () => {
 
   return (
     <Form onSubmit={handleSumbit}>
-      <Row>
-        <Col>
+      <Row className='me-1 px-3'>
+        <Col className='col-8 col-md-9 col-xl-10 px-2' >
           <Form.Control
             type='text'
             placeholder='Buscar'
-            className=" mr-sm-2"
             value={ name }
             onChange={ handleInputChange }
           />
         </Col>
-        <Col xs='auto'>
-          <Button type='submit'>
+        <Col className='col-4 col-md-3 col-xl-2 px-0'>
+          <Button
+            type='submit'
+            className='w-100'
+          >
             Buscar
           </Button>
         </Col>
