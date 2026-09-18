@@ -1,11 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import type { ContextApiData, ApiResponse, Pagination } from "./types";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import type { ContextApiData, Pagination } from "./types";
+import JoyasContext from "./JoyasContext";
 
 const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
 
-const JoyasContext = createContext<ApiResponse | undefined>(undefined);
-
-export const JoyasProvider = ({ children }: { children: ReactNode }) => {
+const JoyasProvider = ({ children }: { children: ReactNode }) => {
 
   const [ loading, setLoading ] = useState<boolean>(true);
   const [ error, setError ]     = useState<unknown | null>(null);
@@ -99,8 +98,4 @@ export const JoyasProvider = ({ children }: { children: ReactNode }) => {
   )
 };
 
-export const useJoyasApi = () => {
-  const context = useContext(JoyasContext);
-  if (!context) throw new Error('useJoyasApi debe usarse dentro de JoyasProvider');
-  return context;
-};
+export default JoyasProvider;

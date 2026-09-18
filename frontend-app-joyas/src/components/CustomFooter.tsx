@@ -1,4 +1,4 @@
-import { useJoyasApi } from "../context/JoyasContext";
+import useJoyasContext from "../context/JoyasContext/useJoyasContext";
 
 const CustomFooter = () => {
 
@@ -8,7 +8,7 @@ const CustomFooter = () => {
     totalPages,
     apiPagination,
     setApiPagination
-  } = useJoyasApi();
+  } = useJoyasContext();
 
   return (
     <div className="ms-2 mt-2 d-flex">
