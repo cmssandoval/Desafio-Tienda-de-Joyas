@@ -6,10 +6,8 @@ const CustomFooter = () => {
     previous,
     next,
     totalPages,
-    page,
-    setPage,
-    order,
-    setOrder,
+    apiPagination,
+    setApiPagination
   } = useJoyasApi();
 
   return (
@@ -21,7 +19,7 @@ const CustomFooter = () => {
               className={`page-item ${!previous ? "disabled" : ""}`}
               onClick={() => {
                 if (previous) {
-                  setPage(page - 1);
+                  setApiPagination({...apiPagination, page: (apiPagination.page - 1)});
                 }
               }}
               style={
@@ -40,9 +38,9 @@ const CustomFooter = () => {
               <li
                 key={index}
                 className={
-                  `page-item ${page === index + 1 ? "active" : ""}`
+                  `page-item ${apiPagination.page === index + 1 ? "active" : ""}`
                 }
-                onClick={() => setPage(index + 1)}
+                onClick={() => setApiPagination({...apiPagination, page: ( index + 1 )})}
               >
                 <a
                   className="page-link"
@@ -55,7 +53,7 @@ const CustomFooter = () => {
               className={`page-item ${!next ? "disabled" : ""}`}
               onClick={() => {
                 if (next) {
-                  setPage(page + 1);
+                  setApiPagination({...apiPagination, page: (apiPagination.page + 1)});
                 }
               }}
               style={
@@ -75,22 +73,22 @@ const CustomFooter = () => {
         <span className="me-2">Orden:</span>
         <button
           className={
-            `btn btn-outline-primary me-2 ${order === "id_asc"
+            `btn btn-outline-primary me-2 ${apiPagination.order === "id_asc"
               ? "active"
               : ""
             }`
           }
-          onClick={() => setOrder("id_asc")}
+          onClick={() => setApiPagination({...apiPagination, order: 'id_asc'})}
         > ASC </button>
 
         <button
           className={
-            `btn btn-outline-primary ${order === "id_desc"
+            `btn btn-outline-primary ${apiPagination.order === "id_desc"
               ? "active"
               : ""
             }`
           }
-          onClick={() => setOrder("id_desc")}
+          onClick={() => setApiPagination({...apiPagination, order: 'id_desc'})}
         > DESC </button>
       </div>
     </div >

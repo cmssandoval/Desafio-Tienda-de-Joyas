@@ -1,50 +1,37 @@
-import { createContext, useContext, useEffect, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
-import type { Joya } from "./types";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import type { ContextApiData, ApiResponse, Pagination } from "./types";
 
-interface JoyasContextType {
-  joyas: Joya[];
-  loading: boolean;
-  error: string | null;
-  previous: string | null;
-  next: string | null;
-  totalPages: number;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  order: string;
-  setOrder: Dispatch<SetStateAction<string>>;
-  getJoyas: (
-    page: number,
-    order: string,
-    limits: number ) => Promise<void>;
-};
+const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
 
-const JoyasContext = createContext<JoyasContextType | undefined>(undefined);
+const JoyasContext = createContext<ApiResponse | undefined>(undefined);
 
 export const JoyasProvider = ({ children }: { children: ReactNode }) => {
 
-  const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
+  const [ loading, setLoading ] = useState<boolean>(true);
+  const [ error, setError ]     = useState<unknown | null>(null);
 
-  const [joyas, setJoyas] = useState<Joya[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [ apiPagination, setApiPagination ] = useState<Pagination>({
+    page: 1,
+    order: 'id_asc',
+    limits: 5,
+  })
 
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [next, setNext] = useState<string | null>(null);
-  const [previous, setPrevious] = useState<string | null>(null);
-  const [order, setOrder] = useState<string>('id_asc');
+  const [ apiData, setApiData ]   = useState<ContextApiData>({
+    joyas: [],
+    totalPages: 1,
+    previous: null,
+    next: null
+  });
 
+  const getJoyas = useCallback(async ( signal?: AbortSignal) => {
 
-  const getJoyas = async (
-    page: number = 1,
-    order: string = 'id_asc',
-    limits: number = 5,
-  ) => {
     setLoading(true);
     setError(null);
+
     try {
       const response = await fetch(
-        `${backendURL}/joyas?page=${page}&order=${order}&limit=${limits}`
+        `${backendURL}/joyas?page=${apiPagination.page}&order=${apiPagination.order}&limit=${apiPagination.limits}`,
+        { signal }
       );
 
       const {
@@ -54,16 +41,25 @@ export const JoyasProvider = ({ children }: { children: ReactNode }) => {
         previous
       } = await response.json();
 
-      setJoyas(results);
-      setTotalPages(total_pages);
-      setNext(next);
-      setPrevious(previous);
+      setApiData({
+        joyas: results,
+        totalPages: total_pages,
+        next,
+        previous
+      })
 
-    } catch (error) {
-      alert(error);
-      console.log(error);
+    } catch (error: unknown) {
+
+      if ((error as Error).name !== 'AbortError') {
+        setError(error);
+        console.error(error);
+      }
+
+    } finally {
+
+      setLoading(false);
     }
-  };
+  }, [apiPagination]);
 
   // interface JoyasFilters {
 
@@ -74,22 +70,29 @@ export const JoyasProvider = ({ children }: { children: ReactNode }) => {
   // };
 
   useEffect(() => {
-    getJoyas(page, order);
-  }, [page, order]);
+    const controller = new AbortController();
+
+    const asyncRenderTimeOut = setTimeout(() => {
+      getJoyas(controller.signal);
+
+    }, 0);
+
+    return () => {
+      controller.abort();
+      clearTimeout(asyncRenderTimeOut);
+    };
+  }, [getJoyas]);
 
   return (
     <JoyasContext.Provider value={{
-        joyas,
-        getJoyas,
+        joyas: apiData.joyas,
         loading,
         error,
-        previous,
-        next,
-        totalPages,
-        page,
-        setPage,
-        order,
-        setOrder,
+        previous: apiData.previous,
+        next: apiData.next,
+        totalPages: apiData.totalPages,
+        apiPagination,
+        setApiPagination,
       }}>
       { children }
     </JoyasContext.Provider>
