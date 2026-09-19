@@ -9,7 +9,7 @@ export const buildJoyasHATEOAS = ({ joyas, total_pages, limits, page, order_by }
                 ...joya,
                 href: `${ BASE_URL }/joyas/joya/${ joya.id }`,
             };
-        }).slice( 0, 5 );
+        }).slice( 0, limits );
 
         return {
 

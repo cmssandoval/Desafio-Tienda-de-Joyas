@@ -12,7 +12,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
   const [ apiPagination, setApiPagination ] = useState<Pagination>({
     page: 1,
     order: 'id_asc',
-    limits: 5,
+    limits: 4,
   })
 
   const [ apiData, setApiData ]   = useState<ContextApiData>({
@@ -29,7 +29,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const response = await fetch(
-        `${backendURL}/joyas?page=${apiPagination.page}&order=${apiPagination.order}&limit=${apiPagination.limits}`,
+        `${backendURL}/joyas?page=${apiPagination.page}&order=${apiPagination.order}&limits=${apiPagination.limits}`,
         { signal }
       );
 
