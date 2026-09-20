@@ -94,12 +94,6 @@ const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal, nomb
         const queryResult = await pool.query( query, values );
         const joyasFiltered = queryResult.rows;
 
-        if ( queryResult.rowCount === 0 ) {
-            const error = new Error(`Not Found. There is no Joyas to show with the specified filters`);
-            error.status = 404;
-
-            throw error;
-        }
         // TODO: Refactor HATEOAS and pagination functions to abstract and use them in both get functions
         return joyasFiltered;
 
