@@ -33,7 +33,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const response = await fetch(
-        `${backendURL}/joyas?page=${apiPagination.page}&order=${apiPagination.order}&limits=${apiPagination.limits}`,
+        `${backendURL}/joyas?page=${apiPagination.page}&order_by=${apiPagination.order}&limits=${apiPagination.limits}`,
         { signal }
       );
 
