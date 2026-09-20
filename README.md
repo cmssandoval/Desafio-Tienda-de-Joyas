@@ -45,7 +45,7 @@ This is my response to the **Desafio 5 - Tienda de joyas**. It was developed to 
     - **http://localhost:3000/joyas?order_by=precio_asc**
     - **http://localhost:3000/joyas?limits=2&page=2**
 
-10. Visit **http://localhost:3000/joyas/filtros** to see a JSON containing all the Joyas fetched from the database.
+10. Visit **http://localhost:3000/joyas/filtros** to see a JSON containing all the Joyas fetched from the database, as joyas/, but you can use filter options via query params instead of pagination options. Also, this route does not have implemented HATEOAS pattern yet.
 
 11. The filter options, available via query parameters, are **precio_max**, **precio_min**, **categoria**, **metal**, and **nombre**. Here are some examples:
     - **http://localhost:3000/joyas/filtros?precio_min=25000&precio_max=30000**
