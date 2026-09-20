@@ -10,16 +10,29 @@ const manageFilePathExistance = () => {
     
     const dir = path.dirname(filePath);
 
-    if ( !fs.existsSync( __dirname ) ) fs.mkdirSync( dir, { recursive: true } );
+    if ( !fs.existsSync( dir ) ) fs.mkdirSync( dir, { recursive: true } );
     if ( !fs.existsSync( filePath ) ) fs.writeFileSync( filePath, '[]' );
+};
+
+const readActivityReport = () => {
+    try {
+        
+        const response = JSON.parse( fs.readFileSync( filePath, 'utf-8' ) );
+        return response;
+
+    } catch (error) {
+        
+        console.log(error);
+        return [];
+
+    }
 };
 
 export const reportActivity = ( dataEntry ) => {
     try {
 
         manageFilePathExistance();
-
-        const existingData = JSON.parse( fs.readFileSync( filePath, 'utf-8' ) );
+        const existingData = readActivityReport();
 
         existingData.push( dataEntry );
         const formattedData = JSON.stringify( existingData, null, 4 );
