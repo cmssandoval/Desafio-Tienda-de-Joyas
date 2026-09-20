@@ -1,7 +1,8 @@
-import Container from "react-bootstrap/Container";
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import CustomCard from './CustomCard';
-import useJoyasContext from "../context/JoyasContext/useJoyasContext";
+
+import useJoyasContext from '../context/JoyasContext/useJoyasContext.ts';
 
 const ProductsGrid = () => {
   const { loading, error, joyas } = useJoyasContext();
@@ -11,9 +12,9 @@ const ProductsGrid = () => {
     return String(error);
   }
 
-  if ( loading ) return <div className='fetch-loading'><h1>Cargando Joyas...</h1></div>;
-  if ( error ) return <div className='fetch-error'><h1>Error: { getErrorMessage(error) }</h1></div>;
-  if ( joyas.length === 0 ) return <div className='fetch-empty'><h1>No hay joyas para mostrar</h1></div>;
+  if ( loading ) return <div className='fetch-status'><h1 className="fetch-loading">Cargando Joyas...</h1></div>;
+  if ( error ) return <div className='fetch-status'><h1 className="fetch-error">Error: { getErrorMessage(error) }</h1></div>;
+  if ( joyas.length === 0 ) return <div className='fetch-status'><h1 className="fetch-empty">No hay joyas para mostrar</h1></div>;
 
   return (
     <Container className="text-center">

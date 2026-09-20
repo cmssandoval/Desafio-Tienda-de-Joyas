@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import JoyasContext from "./JoyasContext";
+import { useContext } from 'react';
+import JoyasContext from './JoyasContext.ts';
 
 const useJoyasContext = () => {
   const context = useContext(JoyasContext);

@@ -2,8 +2,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+
 import { useState, type ChangeEvent, type SubmitEvent } from 'react';
-import useJoyasContext from '../context/JoyasContext/useJoyasContext';
+import useJoyasContext from '../context/JoyasContext/useJoyasContext.ts';
 
 const SearchForm = () => {
   const [ name, setName ] = useState('');
@@ -34,7 +35,7 @@ const SearchForm = () => {
         <Col className='col-4 col-md-3 col-xl-2 px-0'>
           <Button
             type='submit'
-            className='w-100'
+            className='w-100 text-black bg-warning border-warning'
           >
             Buscar
           </Button>

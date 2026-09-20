@@ -1,5 +1,5 @@
-import { createContext } from "react";
-import type { ApiResponse } from "./JoyasContextTypes";
+import { createContext } from 'react';
+import type { ApiResponse } from './JoyasContextTypes.ts';
 
 const JoyasContext = createContext<ApiResponse | undefined>(undefined);
 

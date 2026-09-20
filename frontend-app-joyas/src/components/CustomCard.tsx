@@ -1,8 +1,9 @@
 import Col from 'react-bootstrap/Col';
-import Card from "react-bootstrap/Card";
+import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import type { Joya } from '../context/JoyasContext/JoyasContextTypes';
 import Container from 'react-bootstrap/Container';
+
+import type { Joya } from '../context/JoyasContext/JoyasContextTypes.ts';
 
 
 const CustomCard = ({ nombre, categoria, metal, precio, stock }: Joya) => {
@@ -41,7 +42,7 @@ const CustomCard = ({ nombre, categoria, metal, precio, stock }: Joya) => {
           <Container className='p-1 d-grid gap-3 px-0'>
             <Button
               variant='primary'
-              className=''
+              className='btn-warning'
             >Ver</Button>
             <Button
               variant='secondary'

@@ -2,3 +2,16 @@ p {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.fetch-status {
+    margin: 20px;
+}
+
+.fetch-status h1 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.fetch-error {
+    color: red
+}

@@ -1,4 +1,4 @@
-import useJoyasContext from "../context/JoyasContext/useJoyasContext";
+import useJoyasContext from '../context/JoyasContext/useJoyasContext.ts';
 
 const CustomFooter = () => {
 
@@ -11,7 +11,7 @@ const CustomFooter = () => {
   } = useJoyasContext();
 
   return (
-    <div className="ms-2 mt-2 d-flex">
+    <div className="ms-4 me-3 mt-2 d-flex">
       <nav className="me-auto">
         <ul className="pagination">
           <>
@@ -29,7 +29,7 @@ const CustomFooter = () => {
               }
             >
               <a
-                className="page-link"
+                className={`page-link ${!previous ? '' : 'border-warning text-warning'}`}
                 href="#"
               > Previous </a>
             </li>
@@ -43,7 +43,7 @@ const CustomFooter = () => {
                 onClick={() => setApiPagination({...apiPagination, page: ( index + 1 )})}
               >
                 <a
-                  className="page-link"
+                  className={`page-link border-warning ${apiPagination.page === index + 1 ? "bg-warning text-black" : "text-warning"}`}
                   href="#"
                 > {index + 1} </a>
               </li>
@@ -63,7 +63,7 @@ const CustomFooter = () => {
               }
             >
               <a
-                className="page-link"
+                className={`page-link ${!next ? '' : 'border-warning text-warning'}`}
                 href="#"> Next </a>
             </li>
           </>
@@ -73,7 +73,7 @@ const CustomFooter = () => {
         <span className="me-2">Orden:</span>
         <button
           className={
-            `btn btn-outline-primary me-2 ${apiPagination.order === "id_asc"
+            `btn btn-outline-warning me-2 ${apiPagination.order === "id_asc"
               ? "active"
               : ""
             }`
@@ -83,7 +83,7 @@ const CustomFooter = () => {
 
         <button
           className={
-            `btn btn-outline-primary ${apiPagination.order === "id_desc"
+            `btn btn-outline-warning ${apiPagination.order === "id_desc"
               ? "active"
               : ""
             }`

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type { ContextApiData, ContextApiFilters, Pagination } from "./JoyasContextTypes";
-import JoyasContext from "./JoyasContext";
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import type { ContextApiData, ContextApiFilters, Pagination } from './JoyasContextTypes.ts';
+import JoyasContext from './JoyasContext.ts';
 
 const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
 
