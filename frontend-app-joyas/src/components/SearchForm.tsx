@@ -3,14 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useState, type ChangeEvent, type SubmitEvent } from 'react';
+import useJoyasContext from '../context/JoyasContext/useJoyasContext';
 
 const SearchForm = () => {
   const [ name, setName ] = useState('');
+  const { setApiFilters } = useJoyasContext();
 
   const handleSumbit = ( e: SubmitEvent<HTMLFormElement> ) => {
     e.preventDefault();
     if ( !name ) return;
-    
+    setApiFilters({nombre: name});
     setName('');
   };
 

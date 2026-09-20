@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type { ContextApiData, Pagination } from "./JoyasContextTypes";
+import type { ContextApiData, ContextApiFilters, Pagination } from "./JoyasContextTypes";
 import JoyasContext from "./JoyasContext";
 
 const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
@@ -22,7 +22,11 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
     next: null
   });
 
-  const getJoyas = useCallback(async ( signal?: AbortSignal) => {
+  const [ apiFilters, setApiFilters ] = useState<ContextApiFilters>({
+    nombre: '',
+  });
+
+  const getJoyas = useCallback( async ( signal?: AbortSignal ) => {
 
     setLoading(true);
     setError(null);
@@ -60,13 +64,40 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [apiPagination]);
 
-  // interface JoyasFilters {
-
-  // };
-
-  // const getJoyasFiltered = async () => {
+  const getJoyasFiltered = useCallback( async ( signal?: AbortSignal ) => {
     
-  // };
+    setLoading(true);
+    setError(null);
+
+    try {
+       const response = await fetch(
+        `${backendURL}/joyas/filtros?nombre=${apiFilters.nombre}`,
+        { signal }
+      );
+
+      const results = await response.json();
+
+      //* Static pagination data until abstraction of HATEOAS and pagination in backend.
+      setApiData({
+        joyas: results,
+        totalPages: 1,
+        previous: null,
+        next: null,
+      });
+
+    } catch (error: unknown) {
+
+      if ((error as Error).name !== 'AbortError') {
+        setError(error);
+        console.error(error);
+      }
+     
+    } finally {
+
+      setLoading(false);
+      
+    }
+  }, [apiFilters]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -82,6 +113,20 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [getJoyas]);
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const asyncRenderTimeOut = setTimeout(() => {
+      getJoyasFiltered();
+
+    }, 0);
+
+    return () => {
+      controller.abort();
+      clearTimeout(asyncRenderTimeOut);
+    };
+  }, [getJoyasFiltered]);
+
   return (
     <JoyasContext.Provider value={{
         joyas: apiData.joyas,
@@ -92,6 +137,8 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
         totalPages: apiData.totalPages,
         apiPagination,
         setApiPagination,
+        setApiFilters,
+        // getJoyasFiltered,
       }}>
       { children }
     </JoyasContext.Provider>

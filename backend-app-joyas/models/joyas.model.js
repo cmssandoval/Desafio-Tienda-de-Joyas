@@ -100,8 +100,8 @@ const getJoyasFiltered = async ({ precio_max, precio_min, categoria, metal, nomb
 
             throw error;
         }
-
-        return joyasFiltered ;
+        // TODO: Refactor HATEOAS and pagination functions to abstract and use them in both get functions
+        return joyasFiltered;
 
     } catch (error) {
 

@@ -17,6 +17,10 @@ export interface ContextApiData {
   next: string | null;
 };
 
+export interface ContextApiFilters {
+  nombre: string;
+};
+
 export interface Pagination {
   page: number;
   order: string;
@@ -32,4 +36,6 @@ export interface ApiResponse {
   totalPages: number;
   apiPagination: Pagination;
   setApiPagination: Dispatch<SetStateAction<Pagination>>;
+  setApiFilters: Dispatch<SetStateAction<ContextApiFilters>>;
+  // getJoyasFiltered: () => Promise<void>;
 };
