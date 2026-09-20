@@ -102,8 +102,15 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const controller = new AbortController();
 
+    const hasFilter = apiFilters.nombre?.trim().length > 0;
+
     const asyncRenderTimeOut = setTimeout(() => {
-      getJoyas(controller.signal);
+
+      if ( hasFilter ) {
+        getJoyasFiltered(controller.signal);
+      } else {
+        getJoyas(controller.signal);
+      }
 
     }, 0);
 
@@ -111,21 +118,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
       controller.abort();
       clearTimeout(asyncRenderTimeOut);
     };
-  }, [getJoyas]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const asyncRenderTimeOut = setTimeout(() => {
-      getJoyasFiltered();
-
-    }, 0);
-
-    return () => {
-      controller.abort();
-      clearTimeout(asyncRenderTimeOut);
-    };
-  }, [getJoyasFiltered]);
+  }, [ apiFilters.nombre, getJoyas, getJoyasFiltered ]);
 
   return (
     <JoyasContext.Provider value={{
