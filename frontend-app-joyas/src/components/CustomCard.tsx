@@ -19,7 +19,7 @@ const CustomCard = ({ nombre, categoria, metal, precio, stock }: Joya) => {
       col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3
       g-4 mt-0 mb-4 d-flex 
       '>
-      <Card style={{ width: '100%' }}>
+      <Card className='w-100 shadow'>
         <Card.Img className='rounded-bottom-0' src='https://placeimg.dev/500x350/FFC107' />
         <Card.Body className='d-flex flex-column justify-content-between gap-1'>
           
