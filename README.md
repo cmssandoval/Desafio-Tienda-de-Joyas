@@ -1,4 +1,4 @@
-# Desafío Tienda de joyas
+# Desafío 5 - Tienda de joyas
 This is my response to the **Desafio 5 - Tienda de joyas**. It was developed to demonstrate the correct implementation of the following requirements:
 
 - HATEOAS API REST structure.
@@ -12,11 +12,36 @@ This is my response to the **Desafio 5 - Tienda de joyas**. It was developed to 
 1. Before anything, to use this app you should have:
     - Postgres installed.
     - Database joyas created.
-    - Table inventario created and filled with data.
+    
+        ```postgres
+        CREATE DATABASE joyas;
+        \c joyas
+        ```
+
+    - Table inventario created and filled with corresponding data.
+    
+        ```postgres
+        CREATE TABLE inventario (
+            id SERIAL,
+            nombre VARCHAR(50),
+            categoria VARCHAR(50),
+            metal VARCHAR(50),
+            precio INT,
+            stock INT
+        );
+
+        INSERT INTO inventario values
+        (DEFAULT, 'Collar Heart', 'collar', 'oro', 20000 , 2),
+        (DEFAULT, 'Collar History', 'collar', 'plata', 15000 , 5),
+        (DEFAULT, 'Aros Berry', 'aros', 'oro', 12000 , 10),
+        (DEFAULT, 'Aros Hook Blue', 'aros', 'oro', 25000 , 4),
+        (DEFAULT, 'Anillo Wish', 'aros', 'plata', 30000 , 4),
+        (DEFAULT, 'Anillo Cuarzo Greece', 'anillo', 'oro', 40000 , 2);
+        ```
     
 2. Clone, or download the repository.
 
-3. Create a .env file in the backend and the frontend directories following the examples in each directory, in this file, you can change the PORT and postgres credentials and configuratuon if its needed.
+3. Create a .env file in the backend and the frontend directories following the examples in each directory, in this file, you can change the PORT and postgres credentials and configuration if its needed.
 
 4. In two different terminals, open both backend and frontend directories as root paths.
 
@@ -32,12 +57,10 @@ This is my response to the **Desafio 5 - Tienda de joyas**. It was developed to 
     $ npm run dev
     ```
 
-7. Visit **http://localhost:5173** to see the main page. This page allow you to:
+7. Visit **http://localhost:5173** to see the home page. This page allow you to:
     - See all Joyas.
     - Order Joyas by id ASC and DESC.
     - Search Joyas by name.
-
-8. Visit **http://localhost:3000/joyas** to see a JSON containing all the Joyas fetched from the database following the HATEOAS pattern.
 
 9. The pagination options, available via query parameters, are **limits**, **order_by**, and **page**. Here are some examples:
     - **http://localhost:3000/joyas?limits=3**
