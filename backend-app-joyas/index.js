@@ -2,10 +2,10 @@ import express from 'express';
 import 'dotenv/config';
 
 import cors from 'cors';
-import { notFound } from './middlewares/notFound.js';
-import { errorHandler } from './middlewares/errorHandler.js';
+import { notFound } from './src/middlewares/notFound.js';
+import { errorHandler } from './src/middlewares/errorHandler.js';
 
-import joyasRoute from './routes/joyas.route.js';
+import joyasRoute from './src/routes/joyas.route.js';
 
 const app = express();
 app.use(cors());
