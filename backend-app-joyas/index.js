@@ -17,6 +17,11 @@ app.listen(SERVER_PORT, () => {
     console.log(`Server is on at ${BASE_URL}`);
 });
 
+//* During the development, the frontend index requested this resource
+//* without previous configuration, so this will be a temporary
+//* preventive route to handle it.
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 app.get('/', ( req, res ) => {
     res.status(200).send('Hello world from the home route!');
 });
