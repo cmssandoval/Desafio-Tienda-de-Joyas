@@ -35,7 +35,7 @@ const SearchForm = () => {
         <Col className='col-4 col-md-3 col-xl-2 px-0'>
           <Button
             type='submit'
-            className='w-100 text-black bg-warning border-warning'
+            className='w-100 text-black bg-warning border-warning fw-bold'
           >
             Buscar
           </Button>

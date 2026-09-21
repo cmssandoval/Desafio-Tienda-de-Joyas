@@ -27,8 +27,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const getJoyas = useCallback( async ( signal?: AbortSignal ) => {
-
-    setLoading(true);
+    setLoading(true)
     setError(null);
 
     try {
@@ -112,7 +111,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
         getJoyas(controller.signal);
       }
 
-    }, 0);
+    }, 100);
 
     return () => {
       controller.abort();
@@ -131,7 +130,6 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
         apiPagination,
         setApiPagination,
         setApiFilters,
-        // getJoyasFiltered,
       }}>
       { children }
     </JoyasContext.Provider>

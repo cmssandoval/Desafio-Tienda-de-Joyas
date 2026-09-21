@@ -11,8 +11,8 @@ const CustomFooter = () => {
   } = useJoyasContext();
 
   return (
-    <div className="ms-4 me-3 mt-2 d-flex">
-      <nav className="me-auto">
+    <div className="bg-body-tertiary sticky-bottom px-3 pt-3 d-flex justify-content-between fw-bold"  data-bs-theme="dark">
+      <nav className="ms-1">
         <ul className="pagination">
           <>
             <li
@@ -69,11 +69,11 @@ const CustomFooter = () => {
           </>
         </ul>
       </nav>
-      <div className="me-2">
+      <div className="me-1 text-white">
         <span className="me-2">Orden:</span>
         <button
           className={
-            `btn btn-outline-warning me-2 ${apiPagination.order === "id_asc"
+            `btn btn-outline-warning fw-bold me-2 ${apiPagination.order === "id_asc"
               ? "active"
               : ""
             }`
@@ -83,7 +83,7 @@ const CustomFooter = () => {
 
         <button
           className={
-            `btn btn-outline-warning ${apiPagination.order === "id_desc"
+            `btn btn-outline-warning fw-bold ${apiPagination.order === "id_desc"
               ? "active"
               : ""
             }`

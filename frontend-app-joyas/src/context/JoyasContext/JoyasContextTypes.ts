@@ -37,5 +37,4 @@ export interface ApiResponse {
   apiPagination: Pagination;
   setApiPagination: Dispatch<SetStateAction<Pagination>>;
   setApiFilters: Dispatch<SetStateAction<ContextApiFilters>>;
-  // getJoyasFiltered: () => Promise<void>;
 };

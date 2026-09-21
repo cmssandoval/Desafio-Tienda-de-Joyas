@@ -17,8 +17,8 @@ const ProductsGrid = () => {
   if ( joyas.length === 0 ) return <div className='fetch-status'><h1 className="fetch-empty">No hay joyas para mostrar</h1></div>;
 
   return (
-    <Container className="text-center">
-      <Row className='my-4 px-2'>
+    <Container className="flex-grow-1 text-center">
+      <Row className='mt-4 px-2'>
           {joyas.map(( joya ) => (
             <CustomCard {...joya} />
           ))}

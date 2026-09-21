@@ -6,11 +6,11 @@ import Col from 'react-bootstrap/Col';
 
 const CustomNavbar = () => {
   return (
-    <Navbar expand='lg' className='bg-body-tertiary' data-bs-theme="dark">
+    <Navbar expand='lg' className='bg-body-tertiary sticky-top py-3' data-bs-theme="dark">
       <Container className='justify-content-center p-0'>
         <Row className='w-100'>
           <Col className='col-5 my-auto'>
-            <Navbar.Brand className='fw-bold ms-2 text-warning' href='/'>My Precious Spa</Navbar.Brand>
+            <Navbar.Brand className='fw-bold ms-2 text-warning fs-3' href='/'>My Precious Spa</Navbar.Brand>
           </Col>
           <Col className='col-7 p-0'>
             <SearchForm />
