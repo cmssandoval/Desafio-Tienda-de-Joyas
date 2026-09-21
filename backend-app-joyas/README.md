@@ -13,7 +13,7 @@ Please go to [**General Project README**](../README.md) to read all the instruct
 
 1. Make sure you have postgres installed, with the specified database, table and coorresponding data created.
 
-2. Install dependency packages in a terminal in the backend root path running:
+2. Install dependency packages with a terminal in the backend root path running:
 
     ```bash
     $ npm install
@@ -31,3 +31,4 @@ Please go to [**General Project README**](../README.md) to read all the instruct
 
 6. Visit **http://localhost:3000/joyas/filtros** and write filters via query params to see Joyas that match with the specified filters.
 
+<h4 style="color: lime; font-style: italic;">> Thank you for reading this README.</h4>
