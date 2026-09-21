@@ -30,14 +30,36 @@ p {
 }
 
 .fetch-status {
-    margin: 20px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  margin-top: 5rem;
 }
 
 .fetch-status h1 {
-    text-align: center;
     font-weight: bold;
 }
 
 .fetch-error {
     color: red
+}
+
+.loader {
+  width: 60px;
+  aspect-ratio: 4;
+  --gradient: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
+  background: 
+    var(--gradient) 0%   50%,
+    var(--gradient) 50%  50%,
+    var(--gradient) 100% 50%;
+  background-size: calc(100%/3) 100%;
+  animation: loader 1s infinite linear;
+}
+@keyframes loader {
+    33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
+    50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
+    66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
 }

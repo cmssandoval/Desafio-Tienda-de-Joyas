@@ -111,7 +111,7 @@ const JoyasProvider = ({ children }: { children: ReactNode }) => {
         getJoyas(controller.signal);
       }
 
-    }, 100);
+    }, 1000);
 
     return () => {
       controller.abort();

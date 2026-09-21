@@ -12,9 +12,14 @@ const ProductsGrid = () => {
     return String(error);
   }
 
-  if ( loading ) return <div className='fetch-status'><h1 className="fetch-loading">Cargando Joyas...</h1></div>;
-  if ( error ) return <div className='fetch-status'><h1 className="fetch-error">Error: { getErrorMessage(error) }</h1></div>;
-  if ( joyas.length === 0 ) return <div className='fetch-status'><h1 className="fetch-empty">No hay joyas para mostrar</h1></div>;
+  if ( loading ) return (
+      <div className='fetch-status'>
+        <h1 className="fetch-loading">Cargando Joyas</h1>
+        <div className='loader'></div>
+      </div>
+  );
+  if ( error ) return (<div className='fetch-status'><h1 className="fetch-error">Error: { getErrorMessage(error) }</h1></div>);
+  if ( joyas.length === 0 ) return (<div className='fetch-status'><h1 className="fetch-empty">No hay joyas para mostrar</h1></div>);
 
   return (
     <Container className="flex-grow-1 text-center">
