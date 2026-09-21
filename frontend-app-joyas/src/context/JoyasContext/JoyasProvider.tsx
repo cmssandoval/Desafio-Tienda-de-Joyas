@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { ContextApiData, ContextApiFilters, Pagination } from './JoyasContextTypes.ts';
 import JoyasContext from './JoyasContext.ts';
 
-const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
+const backendURL = `http://localhost:${import.meta.env.VITE_BACKEND_PORT || 3000}`;
 
 const JoyasProvider = ({ children }: { children: ReactNode }) => {
 
